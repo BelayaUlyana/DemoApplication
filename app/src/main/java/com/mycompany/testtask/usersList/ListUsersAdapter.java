@@ -1,4 +1,4 @@
-package com.mycompany.testtask.users;
+package com.mycompany.testtask.usersList;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.R;
 
@@ -48,6 +50,7 @@ public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.User
 
         Glide.with(userViewHolder.imgView.getContext())
                 .load(imageUrl.concat(userList.get(position).getId().toString()))
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(250)))
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.user)
                 .into(userViewHolder.imgView);

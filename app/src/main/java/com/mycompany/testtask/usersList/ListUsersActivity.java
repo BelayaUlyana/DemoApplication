@@ -1,4 +1,4 @@
-package com.mycompany.testtask.users;
+package com.mycompany.testtask.usersList;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_users_screen);
+        setContentView(R.layout.activity_users_list);
 
 
         toolbar = findViewById(R.id.toolbar);

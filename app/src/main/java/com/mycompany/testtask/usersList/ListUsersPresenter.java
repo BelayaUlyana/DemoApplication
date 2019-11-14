@@ -1,4 +1,4 @@
-package com.mycompany.testtask.users;
+package com.mycompany.testtask.usersList;
 
 import android.util.Log;
 
