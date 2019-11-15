@@ -1,5 +1,6 @@
 package com.mycompany.testtask.usersList;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.R;
+import com.mycompany.testtask.usersDetails.DetailsUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListUsersActivity extends AppCompatActivity implements ListUsersContract {
     private List<User> userList = new ArrayList<>();
@@ -24,25 +27,39 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_list);
 
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.toolbarTitle);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.toolbarTitle);
+
+        initRecyclerView();
 
         ListUsersPresenter presenter = new ListUsersPresenter(this);
         presenter.getUserList();
+        adapter.setItems(userList);
+
+    }
+
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.customRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ListUsersAdapter(this, userList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        ListUsersAdapter.OnUserClickListener onUserClickListener = new ListUsersAdapter.OnUserClickListener() {
+
+            @Override
+            public void onUserClick(User user) {
+                Intent intent = new Intent(ListUsersActivity.this, DetailsUserActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        };
+
+        adapter = new ListUsersAdapter(onUserClickListener);
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override
     public void showInfo(List<User> userList) {
-        adapter.setUserList(userList);
+        adapter.setItems(userList);
     }
 
     @Override
@@ -50,4 +67,5 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
         Log.e("LOG ERROR ", error);
         Toast.makeText(this, "Error:" + error, Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.mycompany.testtask.usersList;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,41 +18,35 @@ import java.util.List;
 
 public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.UserViewHolder> {
 
-    Context context;
     private List<User> userList;
+    private OnUserClickListener onUserClickListener;
 
-    ListUsersAdapter(Context context, List<User> usersList) {
-        this.context = context;
-        this.userList = usersList;
+    public interface OnUserClickListener {
+        void onUserClick(User user);
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-        notifyDataSetChanged();
+    ListUsersAdapter(OnUserClickListener onUserClickListener) {
+        this.onUserClickListener = onUserClickListener;
     }
+
 
     @NonNull
     @Override
     public ListUsersAdapter.UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
-        View view = mInflater.inflate(R.layout.custom_row, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.custom_row, viewGroup, false);
         return new UserViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder userViewHolder, int position) {
-        String imageUrl = "https://avatars.io/twitter/";
         User user = userList.get(position);
-        userViewHolder.textViewName.setText(user.getName());
-        userViewHolder.textViewDescription.setText(user.getEmail());
-        userViewHolder.textViewInfo.setText(user.getCompany().getCatchPhrase());
+        userViewHolder.bind(user);
+    }
 
-        Glide.with(userViewHolder.imgView.getContext())
-                .load(imageUrl.concat(userList.get(position).getId().toString()))
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(250)))
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.user)
-                .into(userViewHolder.imgView);
+    void setItems(List<User> userList) {
+        this.userList = userList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,19 +59,39 @@ public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.User
 
     class UserViewHolder extends RecyclerView.ViewHolder {
 
-        final View mView;
         private final ImageView imgView;
         private final TextView textViewName, textViewDescription, textViewInfo;
 
         UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView = itemView;
 
-            imgView = mView.findViewById(R.id.image);
-            textViewName = mView.findViewById(R.id.name);
-            textViewDescription = mView.findViewById(R.id.description);
-            textViewInfo = mView.findViewById(R.id.info);
+            imgView = itemView.findViewById(R.id.image);
+            textViewName = itemView.findViewById(R.id.name);
+            textViewDescription = itemView.findViewById(R.id.description);
+            textViewInfo = itemView.findViewById(R.id.info);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    User user = userList.get(getLayoutPosition());
+                    onUserClickListener.onUserClick(user);
+                }
+            });
+
+        }
+
+        void bind(User user) {
+            String imageUrl = "https://avatars.io/twitter/";
+            textViewName.setText(user.getName());
+            textViewDescription.setText(user.getEmail());
+            textViewInfo.setText(user.getCompany().getCatchPhrase());
+
+            Glide.with(imgView.getContext())
+                    .load(imageUrl.concat(user.getId().toString()))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(250)))
+                    .placeholder(R.drawable.progress_animation)
+                    .error(R.drawable.user)
+                    .into(imgView);
         }
     }
 }
