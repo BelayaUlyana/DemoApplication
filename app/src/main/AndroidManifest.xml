@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mycompany.testtask">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <meta-data
         android:name="android.webkit.WebView.EnableSafeBrowsing"
         android:value="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +20,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <uses-library android:name="com.google.android.maps" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBt8pZmmeStREdb2h-HFS_Cjal-2Psx6Cc" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <activity android:name=".usersDetails.DetailsUserActivity">
 
         </activity>
