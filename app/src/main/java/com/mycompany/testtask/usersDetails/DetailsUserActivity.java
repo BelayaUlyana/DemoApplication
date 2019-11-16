@@ -116,8 +116,9 @@ public class DetailsUserActivity extends AppCompatActivity implements OnMapReady
         LatLng ny = new LatLng(lat, lng);
         mMap.addMarker(new MarkerOptions().position(ny).title(address));
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(ny).zoom(16).bearing(90).tilt(30).build();
+                .target(ny).zoom(16).tilt(30).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 }
 
