@@ -26,7 +26,6 @@ class ListUsersPresenter {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 mainContract.showInfo(response.body());
-                System.out.println("Response = " + response.body());
                 Log.d("TAG", "Response = " + response.body());
             }
 

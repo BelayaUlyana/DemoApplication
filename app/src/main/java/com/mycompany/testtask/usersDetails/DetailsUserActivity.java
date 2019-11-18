@@ -17,6 +17,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.R;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import retrofit2.http.Url;
+
 
 public class DetailsUserActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -44,8 +51,9 @@ public class DetailsUserActivity extends AppCompatActivity implements OnMapReady
         textViewEmail.setText(new StringBuilder("Email: ").append(user.getEmail()));
         textViewPhone.setText(new StringBuilder("Phone: ").append(user.getPhone()));
 
-//        webView.loadUrl("https://www." + user.getWebsite() + "/");
-        webView.loadUrl("https://www.google.com/");
+
+        webView.loadUrl("https://www." + user.getWebsite() + "/");
+//        webView.loadUrl("https://www.google.com/");
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
