@@ -16,15 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.R;
 import com.mycompany.testtask.usersDetails.DetailsUserActivity;
-import com.mycompany.testtask.usersList.Database.AppDatabase;
-import com.mycompany.testtask.usersList.Database.DatabaseCreator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ListUsersActivity extends AppCompatActivity implements ListUsersContract {
-    private List<User> userList = new ArrayList<>();
     private ListUsersAdapter adapter;
     Toolbar toolbar;
 
@@ -36,18 +32,13 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.toolbarTitle);
 
-
         ListUsersPresenter presenter = new ListUsersPresenter(this, this);
-        AppDatabase database = DatabaseCreator.getDatabase(this);
         initRecyclerView();
 
         if (isConnectingToInternet()) {
             presenter.getUserList();
-            database.getUserDao().getAll();
-            adapter.setItems(userList);
         } else {
             presenter.getUserListDB();
-            adapter.setItems(userList);
         }
 
     }

@@ -1,7 +1,6 @@
 package com.mycompany.testtask.usersList;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.usersList.Database.DatabaseCreator;
@@ -18,7 +17,6 @@ class ListUsersPresenter {
     private ListUsersContract mainContract;
     private Context context;
 
-
     ListUsersPresenter(ListUsersContract mainContract, Context context) {
         this.mainContract = mainContract;
         this.context = context;
@@ -31,7 +29,6 @@ class ListUsersPresenter {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 mainContract.showInfo(response.body());
                 DatabaseCreator.getDatabase(context).getUserDao().insertAll(response.body());
-                Log.d("TAG", "Response = " + response.body());
             }
 
             @Override
@@ -45,7 +42,6 @@ class ListUsersPresenter {
 
     void getUserListDB() {
         List<User> userList = DatabaseCreator.getDatabase(context).getUserDao().getAll();
-        Log.d("TAG", "getUserListDB = " + userList);
         mainContract.showInfo(userList);
     }
 }
