@@ -16,6 +16,11 @@ public class Geo implements Parcelable {
     @Expose
     private String lng;
 
+    public Geo(String lat, String lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+
     private Geo(Parcel in) {
         lat = in.readString();
         lng = in.readString();

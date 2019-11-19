@@ -1,4 +1,4 @@
-package com.mycompany.testtask;
+package com.mycompany.testtask.usersList.Network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

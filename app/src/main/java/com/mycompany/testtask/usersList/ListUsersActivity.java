@@ -1,17 +1,23 @@
 package com.mycompany.testtask.usersList;
 
+import android.content.Context;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mycompany.testtask.POJO.User;
 import com.mycompany.testtask.R;
 import com.mycompany.testtask.usersDetails.DetailsUserActivity;
+import com.mycompany.testtask.usersList.Database.AppDatabase;
+import com.mycompany.testtask.usersList.Database.DatabaseCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +32,23 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_list);
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.toolbarTitle);
 
+
+        ListUsersPresenter presenter = new ListUsersPresenter(this, this);
+        AppDatabase database = DatabaseCreator.getDatabase(this);
         initRecyclerView();
 
-        ListUsersPresenter presenter = new ListUsersPresenter(this);
-        presenter.getUserList();
-        adapter.setItems(userList);
+        if (isConnectingToInternet()) {
+            presenter.getUserList();
+            database.getUserDao().getAll();
+            adapter.setItems(userList);
+        } else {
+            presenter.getUserListDB();
+            adapter.setItems(userList);
+        }
 
     }
 
@@ -66,6 +79,13 @@ public class ListUsersActivity extends AppCompatActivity implements ListUsersCon
     public void showError(String error) {
         Log.e("LOG ERROR ", error);
         Toast.makeText(this, "Error:" + error, Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean isConnectingToInternet() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 }

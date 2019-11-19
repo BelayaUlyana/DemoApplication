@@ -3,11 +3,13 @@ package com.mycompany.testtask.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Company implements Parcelable {
-
     @SerializedName("name")
     @Expose
     private String name;
@@ -17,6 +19,12 @@ public class Company implements Parcelable {
     @SerializedName("bs")
     @Expose
     private String bs;
+
+    public Company(String name, String catchPhrase, String bs) {
+        this.name = name;
+        this.catchPhrase = catchPhrase;
+        this.bs = bs;
+    }
 
     private Company(Parcel in) {
         name = in.readString();

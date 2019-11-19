@@ -1,4 +1,4 @@
-package com.mycompany.testtask;
+package com.mycompany.testtask.usersList.Network;
 
 import com.mycompany.testtask.POJO.User;
 import java.util.List;

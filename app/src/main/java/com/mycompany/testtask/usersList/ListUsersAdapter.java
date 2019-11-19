@@ -1,13 +1,13 @@
 package com.mycompany.testtask.usersList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -21,6 +21,7 @@ public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.User
 
     private List<User> userList;
     private OnUserClickListener onUserClickListener;
+    private static final String IMG_URL = "https://avatars.io/twitter/";
 
     public interface OnUserClickListener {
         void onUserClick(User user);
@@ -82,13 +83,12 @@ public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.User
         }
 
         void bind(User user) {
-            String imageUrl = "https://avatars.io/twitter/";
             textViewName.setText(user.getName());
             textViewDescription.setText(user.getEmail());
             textViewInfo.setText(user.getCompany().getCatchPhrase());
 
             Glide.with(imgView.getContext())
-                    .load(imageUrl.concat(user.getId().toString()))
+                    .load(IMG_URL.concat(user.getId().toString()))
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(250)))
                     .placeholder(R.drawable.progress_animation)
                     .error(R.drawable.user)

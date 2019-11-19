@@ -3,11 +3,13 @@ package com.mycompany.testtask.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import retrofit2.http.GET;
-
+@Entity
 public class Address implements Parcelable {
 
     @SerializedName("street")
@@ -24,7 +26,16 @@ public class Address implements Parcelable {
     private String zipcode;
     @SerializedName("geo")
     @Expose
+    @Embedded(prefix = "geo_")
     private Geo geo;
+
+    public Address(String street, String suite, String city, String zipcode, Geo geo) {
+        this.street = street;
+        this.suite = suite;
+        this.city = city;
+        this.zipcode = zipcode;
+        this.geo = geo;
+    }
 
     private Address(Parcel in) {
         geo = in.readParcelable(getClass().getClassLoader());
@@ -93,7 +104,7 @@ public class Address implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeParcelable(geo,i);
+        parcel.writeParcelable(geo, i);
         parcel.writeString(street);
         parcel.writeString(suite);
         parcel.writeString(city);

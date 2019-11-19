@@ -3,11 +3,16 @@ package com.mycompany.testtask.POJO;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class User implements Parcelable {
-
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -22,6 +27,7 @@ public class User implements Parcelable {
     private String email;
     @SerializedName("address")
     @Expose
+    @Embedded(prefix = "address_")
     private Address address;
     @SerializedName("phone")
     @Expose
@@ -31,7 +37,19 @@ public class User implements Parcelable {
     private String website;
     @SerializedName("company")
     @Expose
+    @Embedded(prefix = "company_")
     private Company company;
+
+    public User(Integer id, String name, String username, String email, Address address, String phone, String website, Company company) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.website = website;
+        this.company = company;
+    }
 
     private User(Parcel in) {
         if (in.readByte() == 0) {
