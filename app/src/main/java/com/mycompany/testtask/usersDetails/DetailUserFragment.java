@@ -2,7 +2,6 @@ package com.mycompany.testtask.usersDetails;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,29 +29,24 @@ public class DetailUserFragment extends Fragment implements OnMapReadyCallback {
     private String address;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        User user = Objects.requireNonNull(getActivity()).getIntent().getParcelableExtra("user");
-//        lat = Double.valueOf(user.getAddress().getGeo().getLat());
-//        lng = Double.valueOf(user.getAddress().getGeo().getLng());
-//        address = user.getAddress().getStreet().concat(", ").concat(user.getAddress().getSuite());
-//
-//        mapView = getView().findViewById(R.id.mapView);
-//        mapView.onCreate(savedInstanceState);
-//        mapView.getMapAsync(this);
-//    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mapView = view.findViewById(R.id.mapView);
+
+        mapView.onCreate(null);
+        mapView.onResume();
+    }
 
     public void setText(Intent intent) {
         TextView textViewName, textViewEmail, textViewPhone;
+
         textViewName = getView().findViewById(R.id.name);
         textViewEmail = getView().findViewById(R.id.email);
         textViewPhone = getView().findViewById(R.id.phone);
@@ -64,20 +58,13 @@ public class DetailUserFragment extends Fragment implements OnMapReadyCallback {
         textViewEmail.setText(new StringBuilder("Email: ").append(user.getEmail()));
         textViewPhone.setText(new StringBuilder("Phone: ").append(user.getPhone()));
         webView.loadUrl("https://www." + user.getWebsite() + "/");
-//        webView.loadUrl("https://www.google.com/");
+
     }
 
-
     private void setupMap(User user) {
-
         lat = Double.valueOf(user.getAddress().getGeo().getLat());
         lng = Double.valueOf(user.getAddress().getGeo().getLng());
         address = user.getAddress().getStreet().concat(", ").concat(user.getAddress().getSuite());
-
-        mapView = getView().findViewById(R.id.mapView);
-
-        mapView.onCreate(null);
-        mapView.onResume();
         mapView.getMapAsync(this);
     }
 
@@ -96,49 +83,10 @@ public class DetailUserFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.e("LatLng", String.valueOf(lat).concat(String.valueOf(lng)));
         LatLng ny = new LatLng(lat, lng);
         googleMap.addMarker(new MarkerOptions().position(ny).title(address));
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(ny).zoom(16).tilt(30).build();
+                .target(ny).zoom(5).tilt(30).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    public void onPause() {
-        mapView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        mapView.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
     }
 }

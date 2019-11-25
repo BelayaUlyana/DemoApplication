@@ -9,17 +9,17 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.mycompany.testtask.usersList.ListUserFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         tools:layout="@layout/fragment_user_list" />
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.mycompany.testtask.usersDetails.DetailUserFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1"
         tools:layout="@layout/fragment_detail"/>
 
 </LinearLayout>

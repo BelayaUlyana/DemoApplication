@@ -10,9 +10,7 @@ public class DatabaseCreator {
     private static volatile AppDatabase INSTANCE;
 
     public synchronized static AppDatabase getDatabase(Context context) {
-        Log.d("Tag", "INSTANCE" + INSTANCE);
         if (INSTANCE == null) {
-            Log.d("Tag", "INSTANCE" + INSTANCE);
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
@@ -22,7 +20,7 @@ public class DatabaseCreator {
                 }
             }
         }
-        Log.d("Tag", "INSTANCE" + INSTANCE);
+        Log.e("Tag", "INSTANCE" + INSTANCE);
         return INSTANCE;
     }
 }
