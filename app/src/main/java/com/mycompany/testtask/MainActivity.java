@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mycompany.testtask.usersList.ListUsersActivity;
+import com.mycompany.testtask.usersList.ListUserActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, ListUsersActivity.class);
+                Intent intent = new Intent(MainActivity.this, ListUserActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -12,12 +12,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class ListUsersPresenter {
+class ListUserPresenter {
 
-    private ListUsersContract mainContract;
+    private ListUserContract mainContract;
     private Context context;
 
-    ListUsersPresenter(ListUsersContract mainContract, Context context) {
+    ListUserPresenter(ListUserContract mainContract, Context context) {
         this.mainContract = mainContract;
         this.context = context;
     }

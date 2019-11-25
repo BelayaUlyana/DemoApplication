@@ -17,7 +17,7 @@ import com.mycompany.testtask.R;
 
 import java.util.List;
 
-public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.UserViewHolder> {
+public class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.UserViewHolder> {
 
     private List<User> userList;
     private OnUserClickListener onUserClickListener;
@@ -27,14 +27,14 @@ public class ListUsersAdapter extends RecyclerView.Adapter<ListUsersAdapter.User
         void onUserClick(User user);
     }
 
-    ListUsersAdapter(OnUserClickListener onUserClickListener) {
+    ListUserAdapter(OnUserClickListener onUserClickListener) {
         this.onUserClickListener = onUserClickListener;
     }
 
 
     @NonNull
     @Override
-    public ListUsersAdapter.UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListUserAdapter.UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.custom_row, viewGroup, false);
         return new UserViewHolder(view);
